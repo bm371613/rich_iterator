@@ -1,3 +1,13 @@
+def cycle(iterable):
+    """
+    Return an iterator that cycles values of a given one
+    """
+    values = list(iterable)
+    while True:
+        for value in values:
+            yield value
+
+
 def drop(iterable, n=1):
     """
     Drop `n` values from `iterable`

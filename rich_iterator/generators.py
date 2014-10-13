@@ -17,11 +17,3 @@ def constant(value, times=None):
     else:
         for _ in range(times):
             yield value
-
-
-@return_rich_iterator
-def cycle(values):
-    values = list(values)
-    while True:
-        for value in values:
-            yield value

@@ -5,6 +5,14 @@ from rich_iterator import RichIterator
 
 class RichIteratorTestCase(unittest.TestCase):
 
+    def test_cycle(self):
+        ri = RichIterator([True, False])
+        ri.cycle()
+        self.assertListEqual(
+            [next(ri) for _ in range(5)],
+            [True, False, True, False, True]
+        )
+
     def test_drop(self):
         ri = RichIterator(range(5))
         ri.drop(2)

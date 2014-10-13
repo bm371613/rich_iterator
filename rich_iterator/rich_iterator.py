@@ -53,6 +53,7 @@ class RichIterator:
         return next(self.iterator)
 
     # modifiers
+    cycle = _modifier(_f.cycle)
     drop = _modifier(_f.drop)
     filter = _modifier(filter, iterator_position=1)
     map = _modifier(map, iterator_position=1)
