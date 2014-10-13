@@ -1,28 +1,14 @@
-def next_(iterable, n=None):
+def drop(iterable, n=1):
     """
-    Return next element (or list of elements) of an iterable
-    Raise `StopIteration` if there are not enough elements
-    """
-    iterator = iter(iterable)
-    if n is None:
-        return next(iterator)
-    else:
-        return [next(iterator) for _ in range(n)]
-
-
-def next_at_most(iterable, n):
-    """
-    Return a list of at most `n` elements of an iterable, or all the elements
-    of the iterable if there are less than `n`
+    Drop `n` values from `iterable`
     """
     iterator = iter(iterable)
-    result = []
     try:
         for _ in range(n):
-            result.append(next(iterator))
+            next(iterator)
     except StopIteration:
         pass
-    return result
+    return iterator
 
 
 def per(iterable, n, with_remainder=True):
@@ -34,9 +20,9 @@ def per(iterable, n, with_remainder=True):
     iterator = iter(iterable)
     while True:
         if with_remainder:
-            batch = next_at_most(iterator, n)
+            batch = take_at_most(iterator, n)
         else:
-            batch = next_(iterator, n)
+            batch = take(iterator, n)
         if batch:
             yield batch
         else:
@@ -52,14 +38,25 @@ def step(iterable, step_):
             yield element
 
 
-def skip(iterable, n=1):
+def take(iterable, n):
     """
-    Skip `n` values from `iterable`
+    Return a list of `n` elements of an iterable
+    Raise `StopIteration` if there are not enough elements
     """
     iterator = iter(iterable)
+    return [next(iterator) for _ in range(n)]
+
+
+def take_at_most(iterable, n):
+    """
+    Return a list of at most `n` elements of an iterable, or all the elements
+    of the iterable if there are less than `n`
+    """
+    iterator = iter(iterable)
+    result = []
     try:
         for _ in range(n):
-            next(iterator)
+            result.append(next(iterator))
     except StopIteration:
         pass
-    return iterator
+    return result

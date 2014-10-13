@@ -12,10 +12,10 @@ Examples:
 
     >>> from rich_iterator import RichIterator
     >>> ri = RichIterator([2, 7, 4, 1, 9, 3, 8, 5, 2, 8])
-    >>> ri.filter(lambda x: x % 2).map(lambda x: x * 10).next(3)
+    >>> ri.filter(lambda x: x % 2).map(lambda x: x * 10).take(3)
     [70, 10, 90]
 
     >>> from rich_iterator import integers
-    >>> integers().per(5).skip(10).step(2).next(2)
+    >>> integers().per(5).drop(10).step(2).take(2)
     [[50, 51, 52, 53, 54], [60, 61, 62, 63, 64]]
 

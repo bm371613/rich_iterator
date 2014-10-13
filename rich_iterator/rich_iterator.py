@@ -53,13 +53,14 @@ class RichIterator:
         return next(self.iterator)
 
     # modifiers
+    drop = _modifier(_f.drop)
     filter = _modifier(filter, iterator_position=1)
     map = _modifier(map, iterator_position=1)
     per = _modifier(_f.per)
-    skip = _modifier(_f.skip)
     step = _modifier(_f.step)
 
     # extractors
     list = _extractor(list)
-    next = _extractor(_f.next_)
-    next_at_most = _extractor(_f.next_at_most)
+    next = _extractor(next)
+    take = _extractor(_f.take)
+    take_at_most = _extractor(_f.take_at_most)

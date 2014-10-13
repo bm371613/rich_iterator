@@ -5,6 +5,22 @@ from rich_iterator import RichIterator
 
 class RichIteratorTestCase(unittest.TestCase):
 
+    def test_drop(self):
+        ri = RichIterator(range(5))
+        ri.drop(2)
+        self.assertListEqual(
+            list(ri),
+            [2, 3, 4]
+        )
+
+    def test_drop_stop_iteration(self):
+        ri = RichIterator(range(5))
+        ri.drop(7)
+        self.assertListEqual(
+            list(ri),
+            []
+        )
+
     def test_filter(self):
         ri = RichIterator(range(10))
         ri.filter(lambda x: x % 2)
@@ -29,24 +45,11 @@ class RichIteratorTestCase(unittest.TestCase):
         )
 
     def test_next(self):
-        ri = RichIterator(range(6))
-        self.assertListEqual(
-            list(ri.next(3)),
-            [0, 1, 2]
-        )
-        self.assertEqual(ri.next(), 3)
-        self.assertRaises(StopIteration, lambda: ri.next(3))
-
-    def test_next_at_most(self):
-        ri = RichIterator(range(5))
-        self.assertListEqual(
-            list(ri.next_at_most(3)),
-            [0, 1, 2]
-        )
-        self.assertListEqual(
-            list(ri.next_at_most(3)),
-            [3, 4]
-        )
+        ri = RichIterator(range(3))
+        self.assertEqual(ri.next(), 0)
+        self.assertEqual(ri.next(), 1)
+        self.assertEqual(ri.next(), 2)
+        self.assertRaises(StopIteration, lambda: ri.next())
 
     def test_per(self):
         ri = RichIterator(range(6))
@@ -72,26 +75,29 @@ class RichIteratorTestCase(unittest.TestCase):
             [[0, 1], [2, 3], [4, 5]]
         )
 
-    def test_skip(self):
-        ri = RichIterator(range(5))
-        ri.skip(2)
-        self.assertListEqual(
-            list(ri),
-            [2, 3, 4]
-        )
-
-    def test_skip_stop_iteration(self):
-        ri = RichIterator(range(5))
-        ri.skip(7)
-        self.assertListEqual(
-            list(ri),
-            []
-        )
-
     def test_step(self):
         ri = RichIterator(range(7))
         ri.step(2)
         self.assertListEqual(
             list(ri),
             [0, 2, 4, 6]
+        )
+
+    def test_take(self):
+        ri = RichIterator(range(5))
+        self.assertListEqual(
+            list(ri.take(3)),
+            [0, 1, 2]
+        )
+        self.assertRaises(StopIteration, lambda: ri.take(3))
+
+    def test_take_at_most(self):
+        ri = RichIterator(range(5))
+        self.assertListEqual(
+            list(ri.take_at_most(3)),
+            [0, 1, 2]
+        )
+        self.assertListEqual(
+            list(ri.take_at_most(3)),
+            [3, 4]
         )
